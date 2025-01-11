@@ -26,15 +26,15 @@ class Member(db.Model):
     def to_dict(self):
         return {
             'id': self.id,
-            'name': self.name,
-            'gender': self.gender,
-            'residence': self.residence,
-            'birth_date': self.birth_date.strftime('%Y-%m-%d'),
-            'join_date': self.join_date.strftime('%Y-%m-%d'),
-            'one_month_status': self.one_month_status,
-            'notice_participation': self.notice_participation,
-            'warnings': self.warnings,
-            'notes': self.notes
+            '이름': self.name,
+            '성별': self.gender,
+            '거주지': self.residence,
+            '생년월일': self.birth_date.strftime('%Y-%m-%d'),
+            '모임 가입일': self.join_date.strftime('%Y-%m-%d'),
+            '가입 한 달 여부': self.one_month_status,
+            '공지방 참여': self.notice_participation,
+            '경고횟수': self.warnings,
+            '비고란': self.notes
         }
 
 @app.route('/members', methods=['POST'])
@@ -42,14 +42,14 @@ def add_member():
     data = request.json
     try:
         new_member = Member(
-            name=data['name'],
-            gender=data['gender'],
-            residence=data['residence'],
-            birth_date=datetime.strptime(data['birth_date'], '%Y-%m-%d'),
-            join_date=datetime.strptime(data['join_date'], '%Y-%m-%d') if 'join_date' in data else datetime.utcnow(),
-            notice_participation=data.get('notice_participation', 'X'),
-            warnings=data.get('warnings', 0),
-            notes=data.get('notes', '')
+            name=data['이름'],
+            gender=data['성별'],
+            residence=data['거주지'],
+            birth_date=datetime.strptime(data['생년월일'], '%Y-%m-%d'),
+            join_date=datetime.strptime(data['모임 가입일'], '%Y-%m-%d') if 'join_date' in data else datetime.utcnow(),
+            notice_participation=data.get('공지방 참여', 'X'),
+            warnings=data.get('경고횟수', 0),
+            notes=data.get('비고란', '')
         )
 
         if new_member.join_date + timedelta(days=30) <= datetime.utcnow():
