@@ -10,7 +10,7 @@ function start_app() {
     fi
 
     echo "Starting Flask application..."
-    nohup python3 "$APP_FILE" > app.log 2>&1 &
+    nohup python3 "$APP_FILE" --host=0.0.0.0 --port=5000 > app.log 2>&1 &
     echo $! > "$PID_FILE"
     echo "Application started with PID $(cat "$PID_FILE")."
 }
